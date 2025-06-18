@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Rock.indie</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <script src="main.js"></script>
+</head>
+
+<body>
+    <header data-bs-theme="dark" class="header">
+        <div class="collapse text-bg-dark" id="navbarHeader">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-8 col-md-7 py-4">
+                        <h1>Sobre Nosotros</h1>
+                        <p class="text-body-secondary">Rock.indie comenzó como un pequeño rincón en casa, con unos pocos
+                            instrumentos y muchas ganas de compartir música. Con dedicación y el apoyo de la comunidad,
+                            fue creciendo hasta convertirse en un espacio completo donde principiantes y profesionales
+                            encuentran lo que necesitan. Hoy es mucho más que una tienda: es un punto de encuentro para
+                            quienes viven la música.</p>
+                    </div>
+                    <div class="col-sm-4 offset-md-1 py-4">
+                        <h2>Contact</h2>
+                        <ul class="list-unstyled">
+                            <li><a href="#" class="text-white">Seguinos en Instagram</a></li>
+                            <li><a href="#" class="text-white">Seguinos en Facebook</a></li>
+                            <li><a href="#" class="text-white">Envianos un correo</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="navbar navbar-dark bg-dark shadow-sm">
+            <div class="container">
+                <a href="#" class="navbar-brand d-flex align-items-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-music-note-beamed" viewBox="0 0 16 16">
+                        <path
+                            d="M6 13c0 1.105-1.12 2-2.5 2S1 14.105 1 13s1.12-2 2.5-2 2.5.896 2.5 2m9-2c0 1.105-1.12 2-2.5 2s-2.5-.895-2.5-2 1.12-2 2.5-2 2.5.895 2.5 2" />
+                        <path fill-rule="evenodd" d="M14 11V2h1v9zM6 3v10H5V3z" />
+                        <path d="M5 2.905a1 1 0 0 1 .9-.995l8-.8a1 1 0 0 1 1.1.995V3L5 4z" />
+                    </svg>
+                    <strong>Rock.indie</strong>
+                </a>
+                <div>
+                    <button type="button" class="btn btn-outline-light position-relative" onclick="confirmarCarrito()">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
+                            class="bi bi-cart4" viewBox="0 0 16 16">
+                            <path
+                                d="M0 2.5A.5.5 0 0 1 .5 2H2a.5.5 0 0 1 .485.379L2.89 4H14.5a.5.5 0 0 1 .485.621l-1.5 6A.5.5 0 0 1 13 11H4a.5.5 0 0 1-.485-.379L1.61 3H.5a.5.5 0 0 1-.5-.5M3.14 5l.5 2H5V5zM6 5v2h2V5zm3 0v2h2V5zm3 0v2h1.36l.5-2zm1.11 3H12v2h.61zM11 8H9v2h2zM8 8H6v2h2zM5 8H3.89l.5 2H5zm0 5a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0m9-1a1 1 0 1 0 0 2 1 1 0 0 0 0-2m-2 1a2 2 0 1 1 4 0 2 2 0 0 1-4 0" />
+                        </svg>
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                            style="display: none;" id="badge-counter">
+                            0
+                        </span>
+                    </button>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false"
+                        aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <section class="py-5 text-center container">
+            <div class="row py-lg-5">
+                <div class="col-lg-6 col-md-8 mx-auto">
+                    <h3 class="fw-light">Productos Destacados</h3>
+                    <p class="lead text-body-secondary">Rock.indie es un referente en la ciudad de Buenos Aires para
+                        músicos de todas las edades y estilos. Con una clientela fiel, alianzas con marcas reconocidas y
+                        una comunidad activa, la tienda ha logrado combinar pasión, calidad y cercanía. Es el resultado
+                        de años de trabajo, amor por la música y el compromiso de ofrecer siempre lo mejor
+                        <br>¡Encuentra lo que necesitás en este hermoso apartado de instrumentos de la más alta
+                        calidad!</b>
+                    </p>
+
+                </div>
+            </div>
+        </section>
+        <div class="album py-5 bg-body-tertiary">
+            <div class="container">
+                <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+                    <div class="col">
+                        <div class="card shadow-sm h-100">
+                            <img src="./assets/img/Stratocaster Fender.webp" class="img"
+                                alt="Guitarra electrica roja Stratocaster marca fender">
+                            <div
+                                class="card-body d-flex flex-column justify-content-between align-items-center text-center">
+                                <h3 class="card-title">Guitarra eléctrica</h3>
+                                <h4 class="precio-texto">$500.000</h4>
+                                </svg>
+                                <div class="card-body">
+                                    <p class="card-text">Cuenta con pastillas que incluyen selectores, tonos y volumen
+                                        máster. Tiene un sonido cálido, cristalino, percusivo y con mucha textura. Su
+                                        forma hace que sea el modelo que más se adapta al cuerpo humano, lo que otorga
+                                        mayor versatilidad en su uso.</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <button type="button" class="btn btn-outline-success"
+                                                id="guitarra-electrica" onclick="adquirirYa(this.id)">Adquirir
+                                                ya</button>
+                                            <button type="button" class="btn btn-outline-info" id="guitarra-electrica"
+                                                onclick="agregarCarrito(this.id)">Agregar a carrito
+
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card shadow-sm h-100">
+                            <img src="./assets/img/Piano digital yamaha.webp" class="img-fluid mb-3"
+                                style="max-height: 180px;" alt="Piano digital marca yamaha">
+                            <div
+                                class="card-body d-flex flex-column justify-content-between align-items-center text-center">
+                                <h3 class="mb-1 card-title">Piano Digital Yamaha</h3>
+                                <h4 class="mb-3 precio-texto">$830.000</h4>
+                                </svg>
+                                <div class="card-body">
+                                    <p class="card-text mb-4">El P-45 cuenta con un teclado de martillos graduados
+                                        estándar (GHS). El tacto y la sensibilidad del teclado cambia gradualmente según
+                                        el registro. El teclado del piano también tiene un tacto natural, con teclas
+                                        negras con acabado mate que transmiten una experiencia de auténtico piano
+                                        acústico.</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <button type="button" class="btn btn-outline-success" id="piano-digital"
+                                                onclick=adquirirYa(this.id)">Adquirir ya</button>
+                                            <button type="button" class="btn btn-outline-info" id="piano-digital"
+                                                onclick="agregarCarrito(this.id)">Agregar a carrito
+
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="card shadow-sm h-100">
+                            <img src="./assets/img/Bateria 5 cuerpos yamaha.jpg" class="img-fluid mb-3"
+                                style="max-height: 200px;"
+                                alt="Bateria de 5 cuerpos con platillos de color bordó marca yamaha">
+                            <div
+                                class="card-body h-100 d-flex flex-column justify-content-between align-items-center text-center">
+                                <h3 class="mb-1 card-title">Batería de 5 Cuerpos Yamaha</h3>
+                                <h4 class="mb-3 precio-texto">$1.300.000</h4>
+                                </svg>
+                                <div class="card-body">
+                                    <p class="card-text mb-4">Con un color Infra Red (IR) que combina detalle y
+                                        elegancia, desde el kit junior hasta el kit de rock, cada uno de ellos está
+                                        diseñado para brindarte la mejor experiencia sonora y la máxima comodidad. Todos
+                                        con bordes de rodamiento SONIClear™ que permiten que la vibración de los parches
+                                        resuene de manera uniforme, para un tono líder en su clase y una afinación sin
+                                        complicaciones.</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div>
+                                            <div class="mt-auto">
+                                                <button type="button" class="btn btn-outline-success" id="bateria"
+                                                    onclick=adquirirYa(this.id)>Adquirir ya</button>
+                                                <button type="button" class="btn btn-outline-info" id="bateria"
+                                                    onclick="agregarCarrito(this.id)">Agregar a carrito
+
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer class="text-white py-5">
+        <div class="container">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                class="bi bi-music-note-beamed" viewBox="0 0 16 16">
+                <path
+                    d="M6 13c0 1.105-1.12 2-2.5 2S1 14.105 1 13s1.12-2 2.5-2 2.5.896 2.5 2m9-2c0 1.105-1.12 2-2.5 2s-2.5-.895-2.5-2 1.12-2 2.5-2 2.5.895 2.5 2" />
+                <path fill-rule="evenodd" d="M14 11V2h1v9zM6 3v10H5V3z" />
+                <path d="M5 2.905a1 1 0 0 1 .9-.995l8-.8a1 1 0 0 1 1.1.995V3L5 4z" />
+            </svg>
+            <h4><strong>Rock.indie</strong></h4>
+            <p class="float-end mb-1"> <a href="#">Volver al menú</a> </p>
+            <p class="mb-1">Ofrecemos soluciones diseñadas para músicos exigentes que buscan excelencia en cada detalle.
+                Trabajamos con las mejores marcas del mercado, garantizando precisión, durabilidad y un rendimiento
+                superior en cada instrumento, respaldado por un asesoramiento experto y un compromiso con la calidad que
+                marca la diferencia en cada experiencia musical.</p>
+        </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-j1CDi7MgGQ12Z7Qab0qlWQ/Qqz24Gc6BM0thvEMVjHnfYGF0rmFCozFSxQBxwHKO"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
