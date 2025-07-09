@@ -7,8 +7,9 @@
     <title>Rock.indie</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-4Q6Gf2aSP4eDXB8Miphtr37CMZZQ5oXLH2yaXMJ2w8e2ZtHTl7GptT4jmndRuHDT" crossorigin="anonymous">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <link rel="stylesheet" href="style.css">
-    <script src="main.js"></script>
+    <script src="main.js" defer></script>
 </head>
 
 <body>
@@ -48,7 +49,8 @@
                     <strong>Rock.indie</strong>
                 </a>
                 <div>
-                    <button type="button" class="btn btn-outline-light position-relative" onclick="confirmarCarrito()">
+                    <button type="button" class="btn btn-outline-light position-relative" data-bs-toggle="modal"
+                        data-bs-target="#confirmModal" onclick="mostrarYCalcularTotal()">
                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
                             class="bi bi-cart4" viewBox="0 0 16 16">
                             <path
@@ -177,6 +179,23 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="modalLabel">¿Desea confirmar su compra?</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cancelar"></button>
+                    </div>
+                    <div class="modal-body" id="modal-confirm-body">
+                        ...
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" onclick="confirmarCarrito()">Confirmar</button>
                     </div>
                 </div>
             </div>

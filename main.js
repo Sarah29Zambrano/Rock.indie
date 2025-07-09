@@ -48,9 +48,10 @@ const confirmarCarrito = () => {
     if (badgeCounter.innerText.trim() == "0") {
         return;
     }
-    if (!confirm("¿Desea confirmar su compra?\n\n" + mostrarYCalcularTotal())) {
-        return;
-    }
+
+    // if (!confirm("¿Desea confirmar su compra?\n\n" + mostrarYCalcularTotal())) {
+    //     return;
+    // }
 
     while (true) {
         const codigo = prompt("Ingrese el código de seguridad: ")
@@ -76,5 +77,5 @@ const mostrarYCalcularTotal = () => {
     });
     mensaje += "\n ========================== \n\n"
     mensaje += "Total: $" + total
-    return mensaje;
+    document.getElementById("modal-confirm-body").innerText = mensaje
 }
