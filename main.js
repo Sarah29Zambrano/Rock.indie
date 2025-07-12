@@ -22,11 +22,13 @@ let carrito = []
 
 const adquirirYa = (id) => {
     const modelo = modelos.find(m => m.id == id)
-    if (confirm("¿Desea adquirir " + modelo.nombre + "?")) {
-        alert("Producto Adquirido")
-    } else {
-        alert("Adquisición Cancelada")
-    }
+    const confirmLabel = document.getElementById("modalConfirmLabel")
+    confirmLabel.innerText = `¿Desea adquirir ${modelo.nombre} ?`
+    document.getElementById("modal-confirm-body").innerText = `Precio: $${modelo.precio}`
+
+    const confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'))
+    confirmModal.show()
+    carrito = [modelo]
 }
 
 const agregarCarrito = (id) => {
