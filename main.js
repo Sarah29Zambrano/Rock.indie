@@ -40,42 +40,119 @@ const agregarCarrito = (id) => {
     carrito.push(item)
 
     document.getElementById("badge-counter").innerText = intCounter.toString()
-
 }
 
-const confirmarCarrito = () => {
-    const badgeCounter = document.getElementById("badge-counter")
-    if (badgeCounter.innerText.trim() == "0") {
-        return;
-    }
-
-    // if (!confirm("¿Desea confirmar su compra?\n\n" + mostrarYCalcularTotal())) {
-    //     return;
-    // }
-
-    while (true) {
-        const codigo = prompt("Ingrese el código de seguridad: ")
-        console.log("Código de seguridad ingresado: "+codigo)
-        if (codigo == "1234") {
-            alert("Compra Confirmada")
-            badgeCounter.style.display = "none"
-            badgeCounter.innerText = "0";
-            break;
-        } else {
-            console.error("Código Inválido")
-            alert("Código Incorrecto, intente nuevamente")
-        }
+const abrirModalCarrito = () => {
+    if (mostrarYCalcularTotal()) {
+        const confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'))
+        confirmModal.show()
     }
 }
 
 const mostrarYCalcularTotal = () => {
+    const badgeCounter = document.getElementById("badge-counter")
+    if (badgeCounter.innerText.trim() == "0" || carrito.length == 0) {
+        swal("Carrito vacío", "No hay productos en el carrito", "info")
+        return false;
+    }
+
     let mensaje = ""
     let total = 0
     carrito.forEach(item => {
-        mensaje += "Producto: "+item.nombre +", Precio: $" +item.precio + "\n"
+        mensaje += "Producto: " + item.nombre + ", Precio: $" + item.precio + "\n"
         total += item.precio
     });
-    mensaje += "\n ========================== \n\n"
+    mensaje += "\n --------------------------- \n\n"
     mensaje += "Total: $" + total
     document.getElementById("modal-confirm-body").innerText = mensaje
+    return true;
 }
+
+const capturarCodigoSeguridad = () => {
+    const input = document.getElementById("code-number").value.trim()
+
+    if (!input) {
+        swal("Error", "Debe ingresar un código de seguridad", "error")
+        return;
+    }
+
+    if (input !== codigoSeguridad) {
+        swal("Código incorrecto", "El código ingresado es incorrecto. Intente nuevamente", "error")
+        document.getElementById("code-number").value = ""
+        return;
+    }
+
+    confirmarCompra()
+}
+
+const confirmarCompra = () => {
+    // Guardar la compra en localStorage
+    const compras = JSON.parse(localStorage.getItem('compras') || '[]')
+    const nuevaCompra = {
+        fecha: new Date().toISOString(),
+        productos: [...carrito],
+        total: carrito.reduce((sum, item) => sum + item.precio, 0)
+    }
+    compras.push(nuevaCompra)
+    localStorage.setItem('compras', JSON.stringify(compras))
+
+    swal("¡Compra confirmada!", "Su compra ha sido procesada exitosamente", "success")
+
+    vaciarCarrito()
+
+    cerrarModales()
+}
+
+const vaciarCarrito = () => {
+    carrito = []
+    const badgeCounter = document.getElementById("badge-counter")
+    badgeCounter.style.display = "none"
+    badgeCounter.innerText = "0"
+}
+
+const cerrarModales = () => {
+    const confirmModal = document.getElementById('confirmModal')
+    const confirmModalInstance = bootstrap.Modal.getInstance(confirmModal)
+    if (confirmModalInstance) {
+        confirmModalInstance.hide()
+    }
+
+    const promptModal = document.getElementById('promptModal')
+    const promptModalInstance = bootstrap.Modal.getInstance(promptModal)
+    if (promptModalInstance) {
+        promptModalInstance.hide()
+    }
+
+    document.getElementById("code-number").value = ""
+}
+
+const cancelarCompra = () => {
+    swal("Compra cancelada", "Su compra ha sido cancelada", "info")
+    vaciarCarrito()
+    cerrarModales()
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    const confirmModal = document.getElementById('confirmModal')
+    const cancelButtons = confirmModal.querySelectorAll('.btn-secondary')
+    cancelButtons.forEach(button => {
+        button.addEventListener('click', cancelarCompra)
+    })
+
+    const promptModal = document.getElementById('promptModal')
+    const cancelButtonsPrompt = promptModal.querySelectorAll('.btn-secondary')
+    cancelButtonsPrompt.forEach(button => {
+        button.addEventListener('click', cancelarCompra)
+    })
+
+    document.getElementById("code-number").addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            capturarCodigoSeguridad()
+        }
+    })
+
+    promptModal.addEventListener('shown.bs.modal', function () {
+        document.getElementById("code-number").value = ""
+        document.getElementById("code-number").focus()
+    })
+})

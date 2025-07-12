@@ -49,8 +49,7 @@
                     <strong>Rock.indie</strong>
                 </a>
                 <div>
-                    <button type="button" class="btn btn-outline-light position-relative" data-bs-toggle="modal"
-                        data-bs-target="#confirmModal" onclick="mostrarYCalcularTotal()">
+                    <button type="button" class="btn btn-outline-light position-relative" onclick="abrirModalCarrito()">
                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
                             class="bi bi-cart4" viewBox="0 0 16 16">
                             <path
@@ -183,11 +182,11 @@
                 </div>
             </div>
         </div>
-        <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true">
+        <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="modalConfirmLabel" aria-hidden="true">
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="modalLabel">¿Desea confirmar su compra?</h1>
+                        <h1 class="modal-title fs-5" id="modalConfirmLabel">¿Desea confirmar su compra?</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cancelar"></button>
                     </div>
                     <div class="modal-body" id="modal-confirm-body">
@@ -195,7 +194,31 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary" onclick="confirmarCarrito()">Confirmar</button>
+                        <button type="button" class="btn btn-primary" data-bs-target="#promptModal"
+                            data-bs-toggle="modal" data-bs-dismiss="modal">Confirmar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="promptModal" tabindex="-1" aria-labelledby="modalPromptLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="modalPromptLabel">Inserte código de seguridad</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cancelar"></button>
+                    </div>
+                    <div class="modal-body" id="modal-prompt-body">
+                        <form>
+                            <div class="mb-3">
+                                <label for="code-number" class="col-form-label">Código de seguridad:</label>
+                                <input type="text" class="form-control" id="code-number" placeholder="Ingrese el código"
+                                    required>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary" onclick="capturarCodigoSeguridad()">OK</button>
                     </div>
                 </div>
             </div>
