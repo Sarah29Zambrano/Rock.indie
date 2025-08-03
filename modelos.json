@@ -1,0 +1,23 @@
+[
+    {
+        "id": "guitarra-electrica",
+        "nombre": "Guitarra Eléctrica Fender",
+        "precio": 500000,
+        "imagen": "Stratocaster Fender.webp",
+        "descripcion": "Cuenta con pastillas que incluyen selectores, tonos y volumen máster. Tiene un sonido cálido, cristalino, percusivo y con mucha textura. Su forma hace que sea el modelo que más se adapta al cuerpo humano, lo que otorga mayor versatilidad en su uso."
+    },
+    {
+        "id": "piano-digital",
+        "nombre": "Piano Digital Yamaha",
+        "precio": 830000,
+        "imagen": "Piano digital yamaha.webp",
+        "descripcion": "El P-45 cuenta con un teclado de martillos graduados estándar (GHS). El tacto y la sensibilidad del teclado cambia gradualmente según el registro. El teclado del piano también tiene un tacto natural, con teclas negras con acabado mate que transmiten una experiencia de auténtico piano acústico."
+    },
+    {
+        "id": "bateria",
+        "nombre": "Batería 5 cuerpos Yamaha",
+        "precio": 1300000,
+        "imagen": "Bateria 5 cuerpos yamaha.jpg",
+        "descripcion": "Con un color Infra Red (IR) que combina detalle y elegancia, desde el kit junior hasta el kit de rock, diseñado para brindarte la mejor experiencia sonora. Posee bordes de rodamiento SONIClear™ que permiten que la vibración de los parches resuene de manera uniforme."
+    }
+]

@@ -1,34 +1,73 @@
 const codigoSeguridad = "1234"
 
-let modelos = [
-    {
-        id: "guitarra-electrica",
-        nombre: "Guitarra Eléctrica Fender",
-        precio: 500000
-    },
-    {
-        id: "piano-digital",
-        nombre: "Piano Digital Yamaha",
-        precio: 830000
-    },
-    {
-        id: "bateria",
-        nombre: "Batería 5 cuerpos Yamaha",
-        precio: 1300000
-    }
-]
+let modelos = [];
+let carrito = [];
 
-let carrito = []
+window.addEventListener("DOMContentLoaded", async () => {
+    try {
+        const response = await fetch("./modelos.json");
+        if (!response.ok) throw new Error("Error al cargar los modelos");
+        modelos = await response.json();
+        renderizarProductos(modelos);
+    } catch (error) {
+        console.error("No se pudieron cargar los modelos:", error);
+        Swal.fire({
+            title: "Error",
+            text: "No se pudieron cargar los productos.",
+            icon: "error"
+        });
+    }
+});
+
+function renderizarProductos(lista) {
+    const contenedor = document.getElementById("productos-container");
+    contenedor.innerHTML = "";
+
+    lista.forEach(producto => {
+        const card = document.createElement("div");
+        card.className = "col";
+        card.innerHTML = `
+            <div class="card shadow-sm h-100">
+                <img src="./assets/img/${producto.imagen}" class="card-img-fit mb-3" style="max-height: 200px;" alt="${producto.nombre}">
+                <div class="card-body d-flex flex-column justify-content-between align-items-center text-center">
+                    <h3 class="mb-1 card-title">${producto.nombre}</h3>
+                    <h4 class="mb-3 precio-texto">$${producto.precio.toLocaleString()}</h4>
+                    <p class="card-text mb-4">${producto.descripcion}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <button type="button" class="btn btn-outline-success" id="${producto.id}" onclick="adquirirYa(this.id)">Adquirir ya</button>
+                            <button type="button" class="btn btn-outline-info" id="${producto.id}" onclick="agregarCarrito(this.id)">Agregar a carrito</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+        contenedor.appendChild(card);
+    });
+}
 
 const adquirirYa = (id) => {
     const modelo = modelos.find(m => m.id == id)
-    const confirmLabel = document.getElementById("modalConfirmLabel")
-    confirmLabel.innerText = `¿Desea adquirir ${modelo.nombre} ?`
-    document.getElementById("modal-confirm-body").innerText = `Precio: $${modelo.precio}`
-
-    const confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'))
-    confirmModal.show()
-    carrito = [modelo]
+    Swal.fire({
+        title: "¿Desea adquirir " + modelo.nombre + "?",
+        showCancelButton: true,
+        confirmButtonText: "Confirmar",
+        cancelButtonText: "Cancelar",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: "¡Producto Adquirido!",
+                confirmButtonText: "Aceptar",
+                icon: "success",
+            });
+        } else {
+            Swal.fire({
+                title: "Adquisición Cancelada",
+                confirmButtonText: "Aceptar",
+                icon: "error",
+            });
+        }
+    });
 }
 
 const agregarCarrito = (id) => {
@@ -42,119 +81,60 @@ const agregarCarrito = (id) => {
     carrito.push(item)
 
     document.getElementById("badge-counter").innerText = intCounter.toString()
+
 }
 
-const abrirModalCarrito = () => {
-    if (mostrarYCalcularTotal()) {
-        const confirmModal = new bootstrap.Modal(document.getElementById('confirmModal'))
-        confirmModal.show()
+const confirmarCarrito = async () => {
+    const badgeCounter = document.getElementById("badge-counter")
+    if (badgeCounter.innerText.trim() == "0") {
+        return;
+    }
+    Swal.fire({
+        title: "¿Desea confirmar su compra?",
+        html: `${mostrarYCalcularTotal()}`,
+        showCancelButton: true,
+        confirmButtonText: "Confirmar",
+        cancelButtonText: "Cancelar",
+    }).then((result) => {
+        if (result.isConfirmed) {
+            manejarDialogoCodigoSeguridad();
+        }
+    });
+
+}
+
+const manejarDialogoCodigoSeguridad = async () => {
+    const badgeCounter = document.getElementById("badge-counter")
+    const { value: codigo } = await Swal.fire({
+        title: "Ingrese el código de seguridad",
+        input: "number",
+        inputLabel: "Código",
+        inputPlaceholder: "Inserte código",
+        inputValidator: (value) => {
+            if (value !== "1234") {
+                return "Código Incorrecto, intente nuevamente";
+            }
+        }
+    });
+    if (codigo == "1234") {
+        Swal.fire({
+            title: "¡Compra confirmada!",
+            confirmButtonText: "Aceptar",
+            icon: "success",
+        });
+        badgeCounter.style.display = "none";
+        badgeCounter.innerText = "0";
     }
 }
 
 const mostrarYCalcularTotal = () => {
-    const badgeCounter = document.getElementById("badge-counter")
-    if (badgeCounter.innerText.trim() == "0" || carrito.length == 0) {
-        swal("Carrito vacío", "No hay productos en el carrito", "info")
-        return false;
-    }
-
     let mensaje = ""
     let total = 0
     carrito.forEach(item => {
-        mensaje += "Producto: " + item.nombre + ", Precio: $" + item.precio + "\n"
+        mensaje += "Producto: " + item.nombre + ", Precio: $" + item.precio + "<br>"
         total += item.precio
     });
-    mensaje += "\n --------------------------- \n\n"
+    mensaje += "<br/>================================<br/><br/>"
     mensaje += "Total: $" + total
-    document.getElementById("modal-confirm-body").innerText = mensaje
-    return true;
+    return mensaje;
 }
-
-const capturarCodigoSeguridad = () => {
-    const input = document.getElementById("code-number").value.trim()
-
-    if (!input) {
-        swal("Error", "Debe ingresar un código de seguridad", "error")
-        return;
-    }
-
-    if (input !== codigoSeguridad) {
-        swal("Código incorrecto", "El código ingresado es incorrecto. Intente nuevamente", "error")
-        document.getElementById("code-number").value = ""
-        return;
-    }
-
-    confirmarCompra()
-}
-
-const confirmarCompra = () => {
-    // Guardar la compra en localStorage
-    const compras = JSON.parse(localStorage.getItem('compras') || '[]')
-    const nuevaCompra = {
-        fecha: new Date().toISOString(),
-        productos: [...carrito],
-        total: carrito.reduce((sum, item) => sum + item.precio, 0)
-    }
-    compras.push(nuevaCompra)
-    localStorage.setItem('compras', JSON.stringify(compras))
-
-    swal("¡Compra confirmada!", "Su compra ha sido procesada exitosamente", "success")
-
-    vaciarCarrito()
-
-    cerrarModales()
-}
-
-const vaciarCarrito = () => {
-    carrito = []
-    const badgeCounter = document.getElementById("badge-counter")
-    badgeCounter.style.display = "none"
-    badgeCounter.innerText = "0"
-}
-
-const cerrarModales = () => {
-    const confirmModal = document.getElementById('confirmModal')
-    const confirmModalInstance = bootstrap.Modal.getInstance(confirmModal)
-    if (confirmModalInstance) {
-        confirmModalInstance.hide()
-    }
-
-    const promptModal = document.getElementById('promptModal')
-    const promptModalInstance = bootstrap.Modal.getInstance(promptModal)
-    if (promptModalInstance) {
-        promptModalInstance.hide()
-    }
-
-    document.getElementById("code-number").value = ""
-}
-
-const cancelarCompra = () => {
-    swal("Compra cancelada", "Su compra ha sido cancelada", "info")
-    vaciarCarrito()
-    cerrarModales()
-}
-
-document.addEventListener('DOMContentLoaded', function () {
-    const confirmModal = document.getElementById('confirmModal')
-    const cancelButtons = confirmModal.querySelectorAll('.btn-secondary')
-    cancelButtons.forEach(button => {
-        button.addEventListener('click', cancelarCompra)
-    })
-
-    const promptModal = document.getElementById('promptModal')
-    const cancelButtonsPrompt = promptModal.querySelectorAll('.btn-secondary')
-    cancelButtonsPrompt.forEach(button => {
-        button.addEventListener('click', cancelarCompra)
-    })
-
-    document.getElementById("code-number").addEventListener('keypress', function (e) {
-        if (e.key === 'Enter') {
-            capturarCodigoSeguridad()
-        }
-    })
-
-    promptModal.addEventListener('shown.bs.modal', function () {
-        document.getElementById("code-number").value = ""
-        document.getElementById("code-number").focus()
-    })
-})
